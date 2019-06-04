@@ -1,38 +1,25 @@
 package cat.devsofthecoast.zulodearte.feature.dashboard.view
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import cat.devsofthecoast.mvp_utils.core.config.BaseConfig
 import cat.devsofthecoast.mvp_utils.core.ui.PresenterActivity
-import cat.devsofthecoast.mvp_utils.core.useCase.ErrorHandler
-import cat.devsofthecoast.mvp_utils.core.useCase.PostExecutor
-import cat.devsofthecoast.mvp_utils.core.useCase.ThreadExecutor
 import cat.devsofthecoast.zulodearte.R
 import cat.devsofthecoast.zulodearte.feature.dashboard.DashboardContract
-import cat.devsofthecoast.zulodearte.feature.dashboard.presenter.DashboardPresenter
-import cat.devsofthecoast.zulodearte.model.Artwork
 import cat.devsofthecoast.zulodearte.feature.dashboard.view.adapter.TrendingListAdapter
-import cat.devsofthecoast.zulodearte.repository.trendinglist.TrendingService
+import cat.devsofthecoast.zulodearte.model.Artwork
 import kotlinx.android.synthetic.main.activity_dash_board.*
+import org.koin.android.ext.android.inject
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.concurrent.schedule
+
 
 class DashBoardActivity : PresenterActivity<DashboardContract.Presenter, DashboardContract.View>(),
     DashboardContract.View {
-    override val presenter: DashboardContract.Presenter = DashboardPresenter(object : BaseConfig {
-        override fun getThreadExecutor(): ThreadExecutor {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        }
 
-        override fun getPostExecutor(): PostExecutor {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        }
+    override val presenter: DashboardContract.Presenter by inject()
 
-        override fun getErrorHandler(): ErrorHandler? {
-            return super.getErrorHandler()
-        }
-    })
+//    @Inject
+//    lateinit var artworkRepository: ArtworkRepository
 
     private lateinit var adapter: TrendingListAdapter
     private lateinit var layoutManager: LinearLayoutManager
@@ -41,9 +28,10 @@ class DashBoardActivity : PresenterActivity<DashboardContract.Presenter, Dashboa
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dash_board)
         configureRecycler()
-        Timer().schedule(1000) {
-            TrendingService.getTrendingList()
-        }
+//        Timer().schedule(1000) {
+//            artworkRepository.getArtworks()
+//        }
+        Toast.makeText(this, presenter.sayHello(), Toast.LENGTH_SHORT).show()
     }
 
     private fun configureRecycler() {

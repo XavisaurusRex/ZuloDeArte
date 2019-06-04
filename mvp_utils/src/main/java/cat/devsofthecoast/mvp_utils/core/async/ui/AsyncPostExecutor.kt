@@ -4,7 +4,7 @@ import android.os.Handler
 import android.os.Looper
 import cat.devsofthecoast.mvp_utils.core.useCase.PostExecutor
 
-class CNAAsyncPostExecutor : PostExecutor {
+class BAsyncPostExecutor : PostExecutor {
     private val handler: Handler by lazy {
         Handler(Looper.getMainLooper())
     }

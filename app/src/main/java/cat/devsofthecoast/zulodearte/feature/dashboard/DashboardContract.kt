@@ -11,5 +11,6 @@ interface DashboardContract {
 
     abstract class Presenter : BasePresenter<View>() {
         abstract fun getTrendingData()
+        abstract fun sayHello(): String
     }
 }
