@@ -19,7 +19,7 @@ open class UseCaseExecutor<I, R>(
         builder?.invoke(this)
     }
 
-    fun execute(input: I?) {
+    fun execute(input: I? = null) {
         check(useCase != null) { "A valid UseCase reference should be provided." }
 
         threadExecutor.execute {

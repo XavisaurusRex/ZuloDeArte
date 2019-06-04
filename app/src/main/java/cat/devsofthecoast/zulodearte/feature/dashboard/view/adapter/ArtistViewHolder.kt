@@ -2,7 +2,7 @@ package cat.devsofthecoast.zulodearte.feature.dashboard.view.adapter
 
 import android.view.View
 import cat.devsofthecoast.zulodearte.base.adapter.BaseViewHolder
-import cat.devsofthecoast.zulodearte.model.Artist
+import cat.devsofthecoast.zulodearte.model.app.Artist
 
 class ArtistViewHolder(itemView: View) : BaseViewHolder(itemView),
     ViewHolderItem<Artist> {
@@ -14,6 +14,6 @@ class ArtistViewHolder(itemView: View) : BaseViewHolder(itemView),
     }
 
     override fun getyItemViewHolderType(): Int {
-        return TrendingListAdapter.VIEWTYPE_ARTIST
+        return ArtworkListAdapter.VIEWTYPE_ARTIST
     }
 }
