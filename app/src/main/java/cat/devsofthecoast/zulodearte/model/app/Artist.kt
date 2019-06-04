@@ -1,4 +1,4 @@
-package cat.devsofthecoast.zulodearte.model
+package cat.devsofthecoast.zulodearte.model.app
 
 class Artist(
     val name: String,
