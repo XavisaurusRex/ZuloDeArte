@@ -1,10 +1,14 @@
 package cat.devsofthecoast.zulodearte.feature.testanimations.view
 
+import android.animation.ValueAnimator
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
+import android.view.animation.RotateAnimation
+import java.util.concurrent.TimeUnit
 import kotlin.math.cos
 import kotlin.math.min
 import kotlin.math.sin
@@ -12,18 +16,25 @@ import kotlin.math.sin
 
 class FavButtonAnim : View {
 
-    val paint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
-    val paint_aux: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val paint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private lateinit var starPoints: FloatArray
 
-    private val shadowPaint = Paint(0).apply {
-        color = 0x101010
-        maskFilter = BlurMaskFilter(8f, BlurMaskFilter.Blur.NORMAL)
-    }
-    lateinit var starPoints: FloatArray
-    var outCircle = -1f
-    var inCircle = -1f
-    var circleWidth = 50f
-    var peakNumber = 5
+    var outCircle = DEFAULT_WIDTH_HEIGHT / 2f
+        set(value) {
+            inCircle = value - circleWidth
+            field = value
+            recalculateStar()
+        }
+
+    var circleWidth = outCircle / 3f
+        set(value) {
+            inCircle = outCircle - value
+            field = value
+            recalculateStar()
+            invalidate()
+        }
+    private var inCircle = outCircle - circleWidth
+    var peakNumber = DEFAULT_PEAK_NUMBER
 
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
@@ -36,56 +47,25 @@ class FavButtonAnim : View {
     )
 
     init {
-        paint.style = Paint.Style.STROKE
+        paint.style = Paint.Style.FILL
         paint.strokeWidth = 1f
         paint.color = Color.BLACK //ContextCompat.getColor(context, R.color.fillYellowStar)
-
-        paint_aux.style = Paint.Style.STROKE
-        paint_aux.strokeWidth = 1f
-        paint_aux.color = Color.BLUE //ContextCompat.getColor(context, R.color.fillYellowStar)
     }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         canvas?.apply {
-            // Draw the shadow
-//            drawOval(RectF(clipBounds), shadowPaint)
-
             drawLines(
                 starPoints, 0,
                 starPoints.size, paint
             )
-//            val nose= floatArrayOf(
-//                550.0f, 300.0f,
-//                502.25427f, 446.9463f,
-//                502.25427f, 446.9463f,
-//                377.25424f, 537.76416f,
-//                377.25424f, 537.76416f,
-//                222.74574f, 537.7641f,
-//                222.74574f, 537.7641f,
-//                97.74573f, 446.9463f,
-//                97.74573f, 446.9463f,
-//                50.0f, 299.99997f,
-//                50.0f, 299.99997f,
-//                97.74576f, 153.05367f,
-//                97.74576f, 153.05367f,
-//                222.74573f, 62.235886f,
-//                222.74573f, 62.235886f,
-//                377.25427f, 62.235886f,
-//                377.25427f, 62.235886f,
-//                502.25424f, 153.05368f,
-//                502.25424f, 153.05368f,
-//                550.0f, 300.0f
-//                )
-//            drawLines(nose, 0, nose.size,
-//            paint_aux)
+
         }
     }
 
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-
-        val desiredWidthHeight = 100
+        val desiredWidthHeight = DEFAULT_WIDTH_HEIGHT
 
         var widthHeight = min(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.getSize(heightMeasureSpec))
         val widthMode = MeasureSpec.getMode(widthMeasureSpec)
@@ -101,42 +81,31 @@ class FavButtonAnim : View {
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
-        recalculateStar(w, h)
+        outCircle = w / 2f
+        circleWidth = outCircle / 3f
     }
 
-    private fun recalculateStar(width: Int, height: Int) {
-//        outCircle = (min(width, height) - max(marginStart, marginEnd)).toFloat()
-//        circleWidth = outCircle / 2f
-//        inCircle = outCircle - circleWidth
-//        val centerXY = width/2f
-//
-//        val everyAngleSum = 360f / (peakNumber * 2).toFloat()
-//        val points = arrayListOf<Float>()
-//
-//        for (i in 0 until peakNumber * 2) {
-//            val base = if (i % 2 == 0) {
-//                centerXY/ 2f + outCircle
-//            } else {
-//                centerXY/ 2f + inCircle
-//            }
-//            points.add(base * cos(Math.toRadians((everyAngleSum * i).toDouble()).toFloat()))
-//            points.add(base * sin(Math.toRadians((everyAngleSum * i).toDouble()).toFloat()))
-//        }
-//
-//        starPoints = points.toFloatArray()
-
-        outCircle = ((min(width, height)).toFloat() - 100f) / 2f
+    private fun recalculateStar() {
         val centerXY = width / 2f
 
-        val everyAngleSum = 360f / 10f
+        val everyAngleSum = 360f / (peakNumber * 2)
         val points = arrayListOf<Float>()
+
         points.add(centerXY + outCircle * cos(Math.toRadians((everyAngleSum * 0).toDouble()).toFloat()))
         points.add(centerXY + outCircle * sin(Math.toRadians((everyAngleSum * 0).toDouble()).toFloat()))
-        for (i in 1 until 10) {
 
+        for (i in 1 until (peakNumber * 2)) {
+            val x: Float
+            val y: Float
 
-            val x = centerXY + outCircle * cos(Math.toRadians((everyAngleSum * i).toDouble()).toFloat())
-            val y = centerXY + outCircle * sin(Math.toRadians((everyAngleSum * i).toDouble()).toFloat())
+            if (i % 2 != 0) {
+                x = centerXY + inCircle * cos(Math.toRadians((everyAngleSum * i).toDouble()).toFloat())
+                y = centerXY + inCircle * sin(Math.toRadians((everyAngleSum * i).toDouble()).toFloat())
+            } else {
+                x = centerXY + outCircle * cos(Math.toRadians((everyAngleSum * i).toDouble()).toFloat())
+                y = centerXY + outCircle * sin(Math.toRadians((everyAngleSum * i).toDouble()).toFloat())
+            }
+
             points.add(x)
             points.add(y)
             points.add(x)
@@ -145,5 +114,10 @@ class FavButtonAnim : View {
         points.add(points[0])
         points.add(points[1])
         starPoints = points.toFloatArray()
+    }
+
+    companion object {
+        private const val DEFAULT_WIDTH_HEIGHT = 100
+        private const val DEFAULT_PEAK_NUMBER = 5
     }
 }
