@@ -4,6 +4,8 @@ import cat.devsofthecoast.mvp_utils.cache.Cache
 import cat.devsofthecoast.mvp_utils.core.config.BaseConfig
 import cat.devsofthecoast.zulodearte.feature.dashboard.DashboardContract
 import cat.devsofthecoast.zulodearte.feature.dashboard.presenter.DashboardPresenter
+import cat.devsofthecoast.zulodearte.feature.testanimations.TestAnimationsContract
+import cat.devsofthecoast.zulodearte.feature.testanimations.presenter.TestAnimationsPresenter
 import cat.devsofthecoast.zulodearte.model.app.Artwork
 import cat.devsofthecoast.zulodearte.repository.artwork.ArtworkRepository
 import cat.devsofthecoast.zulodearte.repository.artwork.impl.ArtworkRepositoryImpl
@@ -36,6 +38,7 @@ class AppModules(config: ZDAAppConfig) {
     }
     val presenterModule = module {
         factory { DashboardPresenter(get(), get()) as DashboardContract.Presenter }
+        factory { TestAnimationsPresenter() as TestAnimationsContract.Presenter  }
     }
 }
 

@@ -1,80 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<com.google.android.material.card.MaterialCardView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="7dp">
-    <ImageView
-            app:layout_constraintHorizontal_weight="20"
-            android:id="@+id/ivArtWorkPreview"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:src="@android:drawable/btn_dialog"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/tvArtWorkNameHead"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+        android:layout_height="wrap_content" xmlns:tools="http://schemas.android.com/tools"
+        app:cardCornerRadius="5dp"
+        android:elevation="2dp">
 
-    <TextView
-            app:layout_constraintHorizontal_weight="80"
-            android:id="@+id/tvArtWorkNameHead"
-            android:layout_width="0dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/TextAppearance.AppCompat.Display2"
-            android:textSize="15dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            app:layout_constraintStart_toEndOf="@id/ivArtWorkPreview"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/ivArtWorkPreview"
-            android:text="Título de la obra"/>
-    <TextView
-            android:id="@+id/tvArtWorkName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            style="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="17dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            app:layout_constraintStart_toStartOf="@id/tvArtWorkNameHead"
-            app:layout_constraintEnd_toEndOf="@id/tvArtWorkNameHead"
-            app:layout_constraintTop_toBottomOf="@id/tvArtWorkNameHead"
-            android:text="La libertad guiando el pueblo"
-            android:textAlignment="textEnd"/>
-    <TextView
-            android:id="@+id/tvArtistNameHead"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            style="@style/TextAppearance.AppCompat.Display2"
-            android:textSize="15dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            app:layout_constraintStart_toStartOf="@id/tvArtWorkNameHead"
-            app:layout_constraintEnd_toEndOf="@id/tvArtWorkNameHead"
-            app:layout_constraintTop_toBottomOf="@id/tvArtWorkName"
-            android:text="Autor"/>
-    <TextView
-            android:id="@+id/tvArtistName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            style="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="17dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            app:layout_constraintStart_toStartOf="@id/tvArtWorkNameHead"
-            app:layout_constraintEnd_toEndOf="@id/tvArtWorkNameHead"
-            app:layout_constraintTop_toBottomOf="@id/tvArtistNameHead"
-            android:text="Eugène Delacroix"
-            android:textAlignment="textEnd"/>
+            android:layout_margin="7dp">
 
-    <View android:layout_width="match_parent"
-          android:layout_height="1dp"
-          android:layout_marginEnd="20dp"
-          android:layout_marginStart="20dp"
-          android:background="@color/colorSeparator"
-          app:layout_constraintTop_toBottomOf="@id/tvArtistName"
-          app:layout_constraintBottom_toBottomOf="parent"/>
+        <ImageView
+                app:layout_constraintHorizontal_weight="20"
+                android:id="@+id/ivArtWorkPreview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/picture_preview"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tvArtWorkNameHead"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+                app:layout_constraintHorizontal_weight="80"
+                android:id="@+id/tvArtWorkNameHead"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.AppCompat.Display2"
+                android:textSize="15dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                app:layout_constraintStart_toEndOf="@id/ivArtWorkPreview"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/ivArtWorkPreview"
+                android:text="Título de la obra"/>
+        <TextView
+                android:id="@+id/tvArtWorkName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:textSize="17dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                app:layout_constraintStart_toStartOf="@id/tvArtWorkNameHead"
+                app:layout_constraintEnd_toEndOf="@id/tvArtWorkNameHead"
+                app:layout_constraintTop_toBottomOf="@id/tvArtWorkNameHead"
+                android:text="La libertad guiando el pueblo"
+                android:textAlignment="textEnd"/>
+        <TextView
+                android:id="@+id/tvArtistNameHead"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.AppCompat.Display2"
+                android:textSize="15dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                app:layout_constraintStart_toStartOf="@id/tvArtWorkNameHead"
+                app:layout_constraintEnd_toEndOf="@id/tvArtWorkNameHead"
+                app:layout_constraintTop_toBottomOf="@id/tvArtWorkName"
+                android:text="Autor"/>
+        <TextView
+                android:id="@+id/tvArtistName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:textSize="17dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                app:layout_constraintStart_toStartOf="@id/tvArtWorkNameHead"
+                app:layout_constraintEnd_toEndOf="@id/tvArtWorkNameHead"
+                app:layout_constraintTop_toBottomOf="@id/tvArtistNameHead"
+                android:text="Eugène Delacroix"
+                android:textAlignment="textEnd"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

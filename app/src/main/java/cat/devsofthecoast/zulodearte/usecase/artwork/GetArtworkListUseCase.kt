@@ -16,21 +16,6 @@ class GetArtworkListUseCase(
 ) : UseCase<Void?, List<Artwork>>(appConfig) {
     override fun run(input: Void?, callback: Callback<List<Artwork>>?) {
         try {
-            /**
-             * object :  {
-            override fun onResponse(call: Call<List<Artwork>>, response: Response<List<Artwork>>) {
-            response.body()?.let {
-            callback?.onSuccess(it)
-            }
-            Log.d("ArtworkServiceImpl", "SIZE -> " + response.body()?.size)
-            }
-
-            override fun onFailure(call: Call<List<Artwork>>, t: Throwable) {
-            Log.d("ArtworkServiceImpl", t.message)
-            }
-            })
-             */
-
             artworkRepository.getArtworks {
                 onSuccess = {
                     callback?.onSuccess(it)

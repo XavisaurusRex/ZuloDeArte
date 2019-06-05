@@ -5,4 +5,7 @@
     <color name="colorAccent">#D81B60</color>
     <color name="colorSeparator">#7E7E7E</color>
     <color name="colorLoadingBackground">#B7FFFFFF</color>
+    <color name="grayPreviewItemStart">#7A7A7A</color>
+    <color name="grayPreviewItemEnd">#D3C7C7C7</color>
+    <color name="fillYellowStar">#FFFF00</color>
 </resources>
