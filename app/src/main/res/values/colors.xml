@@ -8,4 +8,5 @@
     <color name="grayPreviewItemStart">#7A7A7A</color>
     <color name="grayPreviewItemEnd">#D3C7C7C7</color>
     <color name="fillYellowStar">#FFFF00</color>
+    <color name="artwork_previewitem_title_textcolor">#000000</color>
 </resources>

@@ -4,17 +4,15 @@ import cat.devsofthecoast.mvp_utils.core.config.BaseConfig
 import cat.devsofthecoast.mvp_utils.core.useCase.Callback
 import cat.devsofthecoast.mvp_utils.core.useCase.UseCase
 import cat.devsofthecoast.mvp_utils.core.useCase.UseCaseExecutor
-import cat.devsofthecoast.zulodearte.base.logs.LogHelper
-import cat.devsofthecoast.zulodearte.model.app.Artwork
+import cat.devsofthecoast.zulodearte.model.api.ArtworkApi
+import cat.devsofthecoast.zulodearte.model.api.ArtworkListApi
 import cat.devsofthecoast.zulodearte.repository.artwork.ArtworkRepository
-import retrofit2.Call
-import retrofit2.Response
 
 class GetArtworkListUseCase(
     private val appConfig: BaseConfig,
     private val artworkRepository: ArtworkRepository
-) : UseCase<Void?, List<Artwork>>(appConfig) {
-    override fun run(input: Void?, callback: Callback<List<Artwork>>?) {
+) : UseCase<Void?, ArtworkListApi>(appConfig) {
+    override fun run(input: Void?, callback: Callback<ArtworkListApi>?) {
         try {
             artworkRepository.getArtworks {
                 onSuccess = {
@@ -30,6 +28,6 @@ class GetArtworkListUseCase(
         }
     }
 
-    class Executor(config: BaseConfig, builder: (UseCaseExecutor<Void?, List<Artwork>>.() -> Unit)?) :
-        UseCaseExecutor<Void?, List<Artwork>>(config, builder)
+    class Executor(config: BaseConfig, builder: (UseCaseExecutor<Void?, ArtworkListApi>.() -> Unit)?) :
+        UseCaseExecutor<Void?, ArtworkListApi>(config, builder)
 }

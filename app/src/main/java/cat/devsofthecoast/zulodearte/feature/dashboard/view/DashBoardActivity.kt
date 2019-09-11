@@ -8,14 +8,13 @@ import cat.devsofthecoast.mvp_utils.core.ui.PresenterActivity
 import cat.devsofthecoast.zulodearte.R
 import cat.devsofthecoast.zulodearte.feature.dashboard.DashboardContract
 import cat.devsofthecoast.zulodearte.feature.dashboard.view.adapter.ArtworkListAdapter
-import cat.devsofthecoast.zulodearte.model.app.Artwork
+import cat.devsofthecoast.zulodearte.model.api.ArtworkListApi
 import kotlinx.android.synthetic.main.activity_dash_board.*
 import org.koin.android.ext.android.inject
-import java.util.*
 
 
 class DashBoardActivity : PresenterActivity<DashboardContract.Presenter, DashboardContract.View>(),
-        DashboardContract.View {
+    DashboardContract.View {
 
     override val presenter: DashboardContract.Presenter by inject()
 
@@ -38,63 +37,18 @@ class DashBoardActivity : PresenterActivity<DashboardContract.Presenter, Dashboa
 
     private fun configureRecycler() {
         layoutManager = LinearLayoutManager(this)
-        adapter = ArtworkListAdapter(generateRandomData())
+        adapter = ArtworkListAdapter()
         rcyMain.layoutManager = layoutManager
         rcyMain.adapter = adapter
     }
 
-    private fun generateRandomData(): ArrayList<Artwork> {
-        val arrayList: ArrayList<Artwork> = arrayListOf()
-        arrayList.add(
-                Artwork(
-                        "",
-                        "Zebra, common",
-                        "Vogel's Tephrosia",
-                        ""
-                )
-        )
-        arrayList.add(Artwork("", "Meerkat", "Lathberry", ""))
-        arrayList.add(
-                Artwork(
-                        "",
-                        "Eagle, white-bellied sea",
-                        "Purple Milkvetch",
-                        ""
-                )
-        )
-        arrayList.add(
-                Artwork(
-                        "",
-                        "South American meadowlark (unidentified)",
-                        "Haupu Range Yellow Loosestrife",
-                        ""
-                )
-        )
-        arrayList.add(
-                Artwork(
-                        "",
-                        "Malabar squirrel",
-                        "Wonderful Cryptantha",
-                        ""
-                )
-        )
-        arrayList.add(
-                Artwork(
-                        "",
-                        "Giant girdled lizard",
-                        "Hybrid Violet",
-                        ""
-                )
-        )
-        return arrayList
-    }
-
-    override fun trendingDataSucess(artworks: List<Artwork>) {
-        adapter.dataSet = artworks
+    override fun trendingDataSucess(artworks: ArtworkListApi) {
+        title = artworks.content!![0].artistName!!
+        adapter.dataSet = artworks.content
     }
 
     override fun trendingDataError(error: Throwable) {
-        Toast.makeText(this, "ERROR DE WS -> ${error.message}",Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "ERROR DE WS -> ${error.message}", Toast.LENGTH_LONG).show()
     }
 
     override fun showLoading() {

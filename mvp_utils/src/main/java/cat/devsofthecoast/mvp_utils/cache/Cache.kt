@@ -2,7 +2,6 @@ package cat.devsofthecoast.mvp_utils.cache
 
 import java.util.*
 import java.util.concurrent.TimeUnit
-import kotlin.concurrent.schedule
 
 class Cache<K, V> {
     private val cache: HashMap<K, Data<V>> = hashMapOf()
@@ -11,46 +10,36 @@ class Cache<K, V> {
         return cache[key]?.value
     }
 
-    operator fun set(key: K, value: V){
+    operator fun set(key: K, value: V) {
         cache[key] = Data(value)
     }
 
-    operator fun contains(key: K): Boolean{
+    operator fun contains(key: K): Boolean {
         return isValid(key)
     }
 
     private fun isValid(key: K): Boolean {
-        return cache[key] != null && cache[key]!!.value != null && cache[key]!!.isValid
+        return cache[key] != null && cache[key]!!.value != null && cache[key]!!.isValid()
     }
 
     inner class Data<V> {
-        // TODO Replace Timer with System.currentTimeInMillis
-        // https://blog.mindorks.com/implement-caching-in-android-using-rxjava-operators
         private val DEFAULT_VALUE_TIMEOUT = TimeUnit.SECONDS.toMillis(60)
-        private var timer = Timer()
+        private var receivedTime: Long = 0
 
         var timeout: Long = DEFAULT_VALUE_TIMEOUT
-        var isValid: Boolean = false
+
+        fun isValid(): Boolean = System.currentTimeMillis() - receivedTime <= timeout
 
         var value: V? = null
             set(value) {
                 field = value
-                startTimeout()
+                receivedTime = System.currentTimeMillis()
             }
 
         private constructor()
 
         constructor(value: V) : this() {
             this.value = value
-        }
-
-        private fun startTimeout() {
-            isValid = true
-            timer.cancel()
-            timer = Timer()
-            timer.schedule(timeout) {
-                isValid = false
-            }
         }
 
     }

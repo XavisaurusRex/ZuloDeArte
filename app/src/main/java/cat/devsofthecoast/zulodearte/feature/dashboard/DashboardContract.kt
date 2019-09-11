@@ -2,11 +2,11 @@ package cat.devsofthecoast.zulodearte.feature.dashboard
 
 import cat.devsofthecoast.mvp_utils.core.presenter.BasePresenter
 import cat.devsofthecoast.mvp_utils.core.presenter.BaseView
-import cat.devsofthecoast.zulodearte.model.app.Artwork
+import cat.devsofthecoast.zulodearte.model.api.ArtworkListApi
 
 interface DashboardContract {
     interface View : BaseView {
-        fun trendingDataSucess(artworks: List<Artwork>)
+        fun trendingDataSucess(artworks: ArtworkListApi)
         fun trendingDataError(error: Throwable)
 
         fun showLoading()

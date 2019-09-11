@@ -1,41 +1,47 @@
 package cat.devsofthecoast.zulodearte.service.artwork.impl
 
-import cat.devsofthecoast.zulodearte.BuildConfig
+import android.content.Context
+import cat.devsofthecoast.zulodearte.R
 import cat.devsofthecoast.zulodearte.api.ArtworkServiceApi
+import cat.devsofthecoast.zulodearte.base.appconfig.ZDAAppConfig
 import cat.devsofthecoast.zulodearte.base.exceptions.NotValidApiResponse
 import cat.devsofthecoast.zulodearte.base.logs.LogHelper
-import cat.devsofthecoast.zulodearte.model.app.Artwork
+import cat.devsofthecoast.zulodearte.base.service.BaseService
+import cat.devsofthecoast.zulodearte.model.api.ArtworkListApi
 import cat.devsofthecoast.zulodearte.service.artwork.ArtworkService
 import cat.devsofthecoast.zulodearte.usecase.artwork.CallbackFromRepo
+import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import java.io.BufferedReader
 
-class ArtworkServiceImpl : ArtworkService {
-    override fun requestArtworkList(callback: CallbackFromRepo<List<Artwork>>, onRecive: ((List<Artwork>) -> Unit)) {
-        val retrofit = Retrofit.Builder()
-            .baseUrl(BuildConfig.API_BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        val service = retrofit.create(ArtworkServiceApi::class.java)
-        val call = service.requestArtworkListData()
+class ArtworkServiceImpl(var appConfig: ZDAAppConfig, var context: Context) : BaseService(), ArtworkService {
 
-        call.enqueue(object : Callback<List<Artwork>> {
-            override fun onResponse(call: Call<List<Artwork>>, response: Response<List<Artwork>>) {
-                if (response.isSuccessful && response.body() != null && response.body()!!.isNotEmpty()) {
-                    onRecive.invoke(response.body()!!)
-                    callback.onSuccess?.invoke(response.body()!!)
-                    LogHelper.logWs(ArtworkServiceApi.TAG_NAME, response.code().toString())
-                } else {
-                    throw NotValidApiResponse(ArtworkServiceApi.TAG_NAME)
+    override fun requestArtworkList(callback: CallbackFromRepo<ArtworkListApi>, onRecive: ((ArtworkListApi) -> Unit)) {
+        if (appConfig.demoMode) {
+            val reader = BufferedReader(context.resources.openRawResource(R.raw.artworkservice).bufferedReader())
+            val artList: ArtworkListApi = GsonBuilder().create().fromJson(reader, ArtworkListApi::class.java)
+            callback.onSuccess?.invoke(artList)
+        } else {
+            val service = retrofit.create(ArtworkServiceApi::class.java)
+            val call = service.requestArtworkListData()
+
+            call.enqueue(object : Callback<ArtworkListApi> {
+                override fun onResponse(call: Call<ArtworkListApi>, response: Response<ArtworkListApi>) {
+                    if (response.isSuccessful && response.body() != null && !(response.body()!!.empty!!)) {
+                        onRecive.invoke(response.body()!!)
+                        callback.onSuccess?.invoke(response.body()!!)
+                        LogHelper.logWs(ArtworkServiceApi.TAG_NAME, response.code().toString())
+                    } else {
+                        throw NotValidApiResponse(ArtworkServiceApi.TAG_NAME)
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<List<Artwork>>, t: Throwable) {
-                callback.onError?.invoke(t)
-            }
-        })
+                override fun onFailure(call: Call<ArtworkListApi>, t: Throwable) {
+                    callback.onError?.invoke(t)
+                }
+            })
+        }
     }
 }

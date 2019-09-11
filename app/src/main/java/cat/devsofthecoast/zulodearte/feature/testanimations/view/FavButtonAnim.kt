@@ -118,6 +118,6 @@ class FavButtonAnim : View {
 
     companion object {
         private const val DEFAULT_WIDTH_HEIGHT = 100
-        private const val DEFAULT_PEAK_NUMBER = 5
+        private const val DEFAULT_PEAK_NUMBER = 10
     }
 }

@@ -5,11 +5,11 @@ import cat.devsofthecoast.zulodearte.base.adapter.BaseAdapter
 import cat.devsofthecoast.zulodearte.base.adapter.BaseViewHolder
 import cat.devsofthecoast.zulodearte.base.exceptions.InvalidViewTypeException
 import cat.devsofthecoast.zulodearte.feature.dashboard.components.ArtworkComponent
-import cat.devsofthecoast.zulodearte.model.app.Artwork
+import cat.devsofthecoast.zulodearte.model.api.ArtworkApi
 
-class ArtworkListAdapter(dataSet: List<Artwork>) : BaseAdapter<BaseViewHolder>() {
+class ArtworkListAdapter : BaseAdapter<BaseViewHolder>() {
 
-    var dataSet: List<Artwork> = dataSet
+    var dataSet: List<ArtworkApi> = ArrayList()
         set(value) {
             field = value
             this.notifyDataSetChanged()
@@ -18,11 +18,11 @@ class ArtworkListAdapter(dataSet: List<Artwork>) : BaseAdapter<BaseViewHolder>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return when (viewType) {
             VIEWTYPE_ARTIST -> ArtworkViewHolder(
-                    ArtworkComponent(parent.context)
+                ArtworkComponent(parent.context)
             )
             VIEWTYPE_ARTWORK -> ArtworkViewHolder(
-                    ArtworkComponent(parent.context)
-            ) //ArtworkViewHolder()
+                ArtworkComponent(parent.context)
+            )
             else -> throw InvalidViewTypeException()
         }
     }
@@ -34,7 +34,7 @@ class ArtworkListAdapter(dataSet: List<Artwork>) : BaseAdapter<BaseViewHolder>()
             }
             VIEWTYPE_ARTWORK -> {
                 (holder as ArtworkViewHolder).bind(dataSet[position])
-                (holder as ArtworkViewHolder).decorate(dataSet[position])
+                holder.decorate(dataSet[position])
             }
             else -> throw InvalidViewTypeException()
         }
