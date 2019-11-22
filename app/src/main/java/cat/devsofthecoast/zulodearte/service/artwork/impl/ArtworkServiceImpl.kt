@@ -2,7 +2,7 @@ package cat.devsofthecoast.zulodearte.service.artwork.impl
 
 import android.content.Context
 import cat.devsofthecoast.zulodearte.R
-import cat.devsofthecoast.zulodearte.api.ArtworkServiceApi
+import cat.devsofthecoast.zulodearte.repository.artwork.api.ArtworkServiceApi
 import cat.devsofthecoast.zulodearte.base.appconfig.ZDAAppConfig
 import cat.devsofthecoast.zulodearte.base.exceptions.NotValidApiResponse
 import cat.devsofthecoast.zulodearte.base.logs.LogHelper

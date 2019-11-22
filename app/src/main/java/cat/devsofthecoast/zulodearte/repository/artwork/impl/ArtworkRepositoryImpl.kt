@@ -1,9 +1,8 @@
 package cat.devsofthecoast.zulodearte.repository.artwork.impl
 
 import cat.devsofthecoast.mvp_utils.cache.Cache
-import cat.devsofthecoast.zulodearte.api.ArtworkServiceApi
+import cat.devsofthecoast.zulodearte.repository.artwork.api.ArtworkServiceApi
 import cat.devsofthecoast.zulodearte.base.logs.LogHelper
-import cat.devsofthecoast.zulodearte.model.api.ArtworkApi
 import cat.devsofthecoast.zulodearte.model.api.ArtworkListApi
 import cat.devsofthecoast.zulodearte.repository.artwork.ArtworkRepository
 import cat.devsofthecoast.zulodearte.service.artwork.ArtworkService

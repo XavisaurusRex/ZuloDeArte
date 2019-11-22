@@ -5,7 +5,7 @@ import android.util.Log
 class LogHelper {
     companion object {
         private const val WS_LOG_LEVEL = Log.DEBUG
-        private const val WS_TAG_PREFIX = "FIREBASE_WS: "
+        private const val WS_TAG_PREFIX = "HEROKU_SPRING_WS: "
 
         private const val CACHE_LOG_LEVEL = Log.DEBUG
         private const val CACHE_TAG_PREFIX = "CACHE: "

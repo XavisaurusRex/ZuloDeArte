@@ -1,4 +1,4 @@
-package cat.devsofthecoast.zulodearte.api
+package cat.devsofthecoast.zulodearte.repository.artwork.api
 
 import cat.devsofthecoast.zulodearte.model.api.ArtworkListApi
 import retrofit2.Call
